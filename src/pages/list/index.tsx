@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Container, Content, Filters } from './style';
 import ContentHeader from '../../components/content-header';
 import Select from '../../components/select';
 import HistoryListFinancies from '../../components/history-list-financies';
+import gains from '../../data/gains';
+import expenses from '../../data/expenses';
 
 interface IListProps {
   match: {
@@ -12,7 +14,19 @@ interface IListProps {
   };
 }
 
+/*eu estou dizendo a minha função que minha interface será desse tipo */
+/* não preciso pegar uma interface com mesmos valores que meu objeto */
+interface IDataProps {
+  id: string;
+  description: string;
+  amountFormatted: string;
+  frequency: string;
+  dateFormatted: string;
+  tagColor: string;
+}
+
 const List: React.FC<IListProps> = ({ match }) => {
+  const [data, setData] = useState<IDataProps[]>([]);
   const { type } = match.params;
   /*com match.params consigo com desconstrução pegar type */
 
@@ -47,6 +61,25 @@ const List: React.FC<IListProps> = ({ match }) => {
     { value: 6, label: 2017 },
   ];
 
+  const listData = useMemo(() => {
+    return type === 'entry-balance' ? gains : expenses;
+    /*chamo pelo nome do arquivo,neste arquivo não tem constante só export default */
+  }, [type]);
+
+  useEffect(() => {
+    const response = listData.map((item) => {
+      return {
+        id: String(Math.random() * data.length),
+        description: item.description,
+        amountFormatted: item.amount,
+        frequency: item.frequency,
+        dateFormatted: item.date,
+        tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E',
+      };
+    });
+    setData(response);
+  }, []);
+
   return (
     <Container>
       <ContentHeader title={title} lineColor={color}>
@@ -63,12 +96,14 @@ const List: React.FC<IListProps> = ({ match }) => {
       </Filters>
 
       <Content>
-        <HistoryListFinancies
-          color="#E44C4E"
-          title="Conta de Luz"
-          subTitle="4/06/2021"
-          amount="R$24,30"
-        />
+        {data.map((item) => (
+          <HistoryListFinancies
+            color={item.tagColor}
+            title={item.description}
+            subTitle={item.dateFormatted}
+            amount={item.amountFormatted}
+          />
+        ))}
       </Content>
     </Container>
   );
