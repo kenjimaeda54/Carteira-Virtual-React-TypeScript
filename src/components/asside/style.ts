@@ -33,6 +33,7 @@ export const MenuNavigation = styled.a`
   text-decoration: none;
   color: ${(props) => props.theme.colors.info};
   margin: 7px 1vw;
+  cursor: pointer;
 
   &:hover {
     opacity: 0.7;

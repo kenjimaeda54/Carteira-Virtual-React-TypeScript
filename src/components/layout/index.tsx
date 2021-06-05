@@ -2,7 +2,7 @@ import React from 'react';
 import GridAside from '../asside';
 import Content from '../content';
 import MainHeader from '../main-header';
-import { Layout } from './layout';
+import { Layout } from './style';
 
 const GridLayout: React.FC = ({ children }) => {
   return (

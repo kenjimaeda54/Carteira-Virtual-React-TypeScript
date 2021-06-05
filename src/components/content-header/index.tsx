@@ -15,11 +15,12 @@ const ContentHeader: React.FC<IContentHeader> = ({
   return (
     <Container>
       <TitleContent lineColor={lineColor}>
-        <h1> {title}</h1>
+        <h1>{title}</h1>{' '}
+        {/*preciso de uma tag para referenciar a constate  estilo */}
       </TitleContent>
       {/*quem esta envolvendo o select é o controles ou seja
-           todo estilo relacionado ao pai do select e aqui 
-        exemplo alinhar os select em row    */}
+           todo estilo relacionado ao pai do select e aqui. 
+        Exemplo alinhar os select em row    */}
       <Controllers>{children}</Controllers>
     </Container>
   );

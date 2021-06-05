@@ -6,7 +6,7 @@ import Select from '../../components/select';
 const Dashboard: React.FC = () => {
   const options = [
     { value: 'Rafael', label: 'Rafael' },
-    { value: 'Ricado', label: 'Ricado' },
+    { value: 'Ricardo', label: 'Ricardo' },
     { value: 'Erika', label: 'Erika' },
   ];
 

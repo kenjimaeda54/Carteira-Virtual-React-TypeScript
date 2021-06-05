@@ -6,7 +6,7 @@ import {
   Title,
   MenuHeader,
   MenuNavigation,
-} from './asside';
+} from './style';
 import {
   MdDashboard,
   MdArrowDownward,
@@ -25,19 +25,19 @@ const GridAside: React.FC = (): JSX.Element => {
       </Header>
 
       <MenuHeader>
-        <MenuNavigation href="#">
+        <MenuNavigation href="/dashboard">
           <MdDashboard />
           Dashboard
         </MenuNavigation>
-        <MenuNavigation href="#">
+        <MenuNavigation href="/list/entry-balance">
           <MdArrowUpward />
           Entradas
         </MenuNavigation>
-        <MenuNavigation href="#">
+        <MenuNavigation href="/list/exit-balance">
           <MdArrowDownward />
           Saídas
         </MenuNavigation>
-        <MenuNavigation href="#">
+        <MenuNavigation>
           <MdExitToApp />
           Sair
         </MenuNavigation>
