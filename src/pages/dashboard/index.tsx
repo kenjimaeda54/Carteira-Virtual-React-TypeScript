@@ -13,7 +13,11 @@ const Dashboard: React.FC = () => {
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#fff">
-        <Select options={options} />
+        <Select
+          defaultValue="vazio"
+          onChange={() => console.log('eu')}
+          options={options}
+        />
       </ContentHeader>
     </Container>
   );

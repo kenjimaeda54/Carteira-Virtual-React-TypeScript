@@ -5,6 +5,8 @@ import Select from '../../components/select';
 import HistoryListFinancies from '../../components/history-list-financies';
 import gains from '../../data/gains';
 import expenses from '../../data/expenses';
+import CoinsFormated from '../../util/coins-formated';
+import DateFormated from '../../util/date-formated';
 
 interface IListProps {
   match: {
@@ -17,7 +19,7 @@ interface IListProps {
 /*eu estou dizendo a minha função que minha interface será desse tipo */
 /* não preciso pegar uma interface com mesmos valores que meu objeto */
 interface IDataProps {
-  id: string;
+  id: number;
   description: string;
   amountFormatted: string;
   frequency: string;
@@ -27,6 +29,12 @@ interface IDataProps {
 
 const List: React.FC<IListProps> = ({ match }) => {
   const [data, setData] = useState<IDataProps[]>([]);
+  const [monthSelected, setMonthSelected] = useState<string>(
+    String(new Date().getMonth() + 1),
+  );
+  const [yearSelected, setYearSelected] = useState<string>(
+    String(new Date().getFullYear()),
+  );
   const { type } = match.params;
   /*com match.params consigo com desconstrução pegar type */
 
@@ -39,12 +47,12 @@ const List: React.FC<IListProps> = ({ match }) => {
   }, []);
 
   const month = [
-    { value: 1, label: 'Janeiro' },
+    { value: 6, label: 'Junho' },
     { value: 2, label: 'Fevereiro' },
+    { value: 1, label: 'Janeiro' },
     { value: 3, label: 'Março' },
     { value: 4, label: 'Abril' },
     { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
     { value: 7, label: 'Julho' },
     { value: 8, label: 'Agosto' },
     { value: 9, label: 'Setembro' },
@@ -54,10 +62,10 @@ const List: React.FC<IListProps> = ({ match }) => {
   ];
 
   const year = [
+    { value: 5, label: 2018 },
     { value: 1, label: 2021 },
     { value: 3, label: 2020 },
     { value: 4, label: 2019 },
-    { value: 5, label: 2018 },
     { value: 6, label: 2017 },
   ];
 
@@ -67,24 +75,41 @@ const List: React.FC<IListProps> = ({ match }) => {
   }, [type]);
 
   useEffect(() => {
-    const response = listData.map((item) => {
+    const filteredDate = listData.filter((value) => {
+      const date = new Date(value.date);
+      const month = String(date.getMonth() + 1);
+      const year = String(date.getFullYear());
+      return month === monthSelected && year === yearSelected;
+    });
+
+    const response = filteredDate.map((item, index) => {
       return {
-        id: String(Math.random() * data.length),
+        id: index,
         description: item.description,
-        amountFormatted: item.amount,
+        amountFormatted: CoinsFormated(Number(item.amount)),
         frequency: item.frequency,
-        dateFormatted: item.date,
+        dateFormatted: DateFormated(item.date),
         tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E',
       };
     });
     setData(response);
-  }, []);
+  }, [yearSelected, monthSelected, listData]);
+
+  console.log(monthSelected);
 
   return (
     <Container>
       <ContentHeader title={title} lineColor={color}>
-        <Select options={month} />
-        <Select options={year} />
+        <Select
+          options={month}
+          onChange={(e) => setMonthSelected(e.target.value)}
+          defaultValue={monthSelected}
+        />
+        <Select
+          options={year}
+          onChange={(e) => setYearSelected(e.target.value)}
+          defaultValue={yearSelected}
+        />
       </ContentHeader>
       <Filters>
         <button type="button" className="tag-filter tag-filter-recurring">
@@ -98,6 +123,7 @@ const List: React.FC<IListProps> = ({ match }) => {
       <Content>
         {data.map((item) => (
           <HistoryListFinancies
+            key={item.id}
             color={item.tagColor}
             title={item.description}
             subTitle={item.dateFormatted}
