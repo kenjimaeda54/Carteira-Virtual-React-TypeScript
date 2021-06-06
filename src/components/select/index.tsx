@@ -18,9 +18,9 @@ const Select: React.FC<InputSelection> = ({
   return (
     <Container>
       <select onChange={onChange} defaultValue={defaultValue}>
-        {options.map((options, index) => (
-          <option key={index} value={options.label}>
-            {options.label}
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>

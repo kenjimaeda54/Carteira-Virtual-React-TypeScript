@@ -45,7 +45,6 @@ const List: React.FC<IListProps> = ({ match }) => {
   const title = useMemo(() => {
     return type === 'entry-balance' ? 'Entrada' : 'Saída';
   }, []);
-
   const month = [
     { value: 6, label: 'Junho' },
     { value: 2, label: 'Fevereiro' },
@@ -62,11 +61,11 @@ const List: React.FC<IListProps> = ({ match }) => {
   ];
 
   const year = [
-    { value: 5, label: 2018 },
-    { value: 1, label: 2021 },
-    { value: 3, label: 2020 },
-    { value: 4, label: 2019 },
-    { value: 6, label: 2017 },
+    { value: 2018, label: 2018 },
+    { value: 2021, label: 2021 },
+    { value: 2020, label: 2020 },
+    { value: 2019, label: 2019 },
+    { value: 2017, label: 2017 },
   ];
 
   const listData = useMemo(() => {
@@ -94,8 +93,6 @@ const List: React.FC<IListProps> = ({ match }) => {
     });
     setData(response);
   }, [yearSelected, monthSelected, listData]);
-
-  console.log(monthSelected);
 
   return (
     <Container>
