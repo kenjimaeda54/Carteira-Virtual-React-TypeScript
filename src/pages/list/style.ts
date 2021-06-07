@@ -16,6 +16,7 @@ export const Filters = styled.div`
     color: ${(props) => props.theme.colors.white};
     /*valo do transition é em ms so tenho uma propriedade */
     transition: opacity 0.5s;
+    opacity: 0.3;
     cursor: pointer;
     &:hover {
       opacity: 0.7;
@@ -26,13 +27,16 @@ export const Filters = styled.div`
     display: block;
     width: 77px;
     height: 10px;
-    background-color: ${(props) => props.theme.colors.warning};
+    background-color: ${(props) => props.theme.colors.success};
   }
   .tag-filter-eventual::after {
     content: '';
     display: block;
     width: 70px;
     height: 10px;
-    background-color: ${(props) => props.theme.colors.success};
+    background-color: ${(props) => props.theme.colors.warning};
+  }
+  .tag-active {
+    opacity: 1;
   }
 `;
