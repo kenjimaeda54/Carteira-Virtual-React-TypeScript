@@ -29,7 +29,7 @@ interface IDataProps {
 }
 
 const List: React.FC<IListProps> = ({ match }) => {
-  const [data, setData] = useState<IDataProps[]>([]);
+  const [dataFilters, setDataFilters] = useState<IDataProps[]>([]);
   const [monthSelected, setMonthSelected] = useState<string>(
     String(new Date().getMonth() + 1),
   );
@@ -41,24 +41,26 @@ const List: React.FC<IListProps> = ({ match }) => {
     'eventual',
   ]);
 
-  const { type } = match.params;
+  const movimentBalance = match.params.type;
   /*com match.params consigo com desconstrução pegar type */
 
-  const color = useMemo(() => {
-    return type === 'entry-balance' ? '#F7931B' : '#d62c2c';
-  }, []);
-
-  const title = useMemo(() => {
-    return type === 'entry-balance' ? 'Entrada' : 'Saída';
-  }, []);
-
-  const listData = useMemo(() => {
-    return type === 'entry-balance' ? gains : expenses;
-    /*chamo pelo nome do arquivo,neste arquivo não tem constante só export default */
-  }, [type]);
+  const pageData = useMemo(() => {
+    return movimentBalance === 'entry-balance'
+      ? {
+          title: 'Entrada',
+          color: '#F7931B',
+          data: gains,
+        }
+      : {
+          title: 'Saída',
+          color: '#d62c2c',
+          data: expenses,
+        };
+  }, [movimentBalance]);
 
   useEffect(() => {
-    const filteredDate = listData.filter((value) => {
+    const { data } = pageData;
+    const filteredDate = data.filter((value) => {
       const date = new Date(value.date);
       const month = String(date.getMonth() + 1);
       const year = String(date.getFullYear());
@@ -79,13 +81,14 @@ const List: React.FC<IListProps> = ({ match }) => {
         tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E',
       };
     });
-    setData(response);
-  }, [yearSelected, monthSelected, listData, frequencySelected]);
+    setDataFilters(response);
+  }, [yearSelected, monthSelected, pageData, frequencySelected]);
 
   const years = useMemo(() => {
+    const { data } = pageData;
     const yearUniq: number[] = [];
 
-    listData.forEach((item) => {
+    data.forEach((item) => {
       const date = new Date(item.date);
       const year = date.getFullYear();
       if (!yearUniq.includes(year)) {
@@ -98,7 +101,7 @@ const List: React.FC<IListProps> = ({ match }) => {
         label: item,
       };
     });
-  }, []);
+  }, [pageData]);
 
   const months = useMemo(() => {
     return OptionsMonth.map((item, index) => {
@@ -107,23 +110,25 @@ const List: React.FC<IListProps> = ({ match }) => {
         label: item,
       };
     });
-  }, []);
+  }, [OptionsMonth]);
 
   const handleFrequencySelected = (params: string) => {
     const thereFrequencySelected = frequencySelected.findIndex(
-      (item) => item === params,
+      (value) => value === params,
     );
     if (thereFrequencySelected >= 0) {
-      const backFrequency = frequencySelected.filter((item) => item !== params);
-      setFrequencySelected(backFrequency);
+      const backFrequencySelected = frequencySelected.filter(
+        (value) => value !== params,
+      );
+      setFrequencySelected(backFrequencySelected);
     } else {
-      setFrequencySelected((prev) => [...prev, params]);
+      setFrequencySelected((itens) => [...itens, params]);
     }
   };
 
   return (
     <Container>
-      <ContentHeader title={title} lineColor={color}>
+      <ContentHeader title={pageData.title} lineColor={pageData.color}>
         <Select
           options={months}
           onChange={(e) => setMonthSelected(e.target.value)}
@@ -157,7 +162,7 @@ const List: React.FC<IListProps> = ({ match }) => {
       </Filters>
 
       <Content>
-        {data.map((item) => (
+        {dataFilters.map((item) => (
           <HistoryListFinancies
             key={item.id}
             color={item.tagColor}
