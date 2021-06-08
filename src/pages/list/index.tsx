@@ -30,11 +30,11 @@ interface IDataProps {
 
 const List: React.FC<IListProps> = ({ match }) => {
   const [dataFilters, setDataFilters] = useState<IDataProps[]>([]);
-  const [monthSelected, setMonthSelected] = useState<string>(
-    String(new Date().getMonth() + 1),
+  const [monthSelected, setMonthSelected] = useState<number>(
+    new Date().getMonth() + 1,
   );
-  const [yearSelected, setYearSelected] = useState<string>(
-    String(new Date().getFullYear()),
+  const [yearSelected, setYearSelected] = useState<number>(
+    new Date().getFullYear(),
   );
   const [frequencySelected, setFrequencySelected] = useState<string[]>([
     'recorrente',
@@ -47,12 +47,12 @@ const List: React.FC<IListProps> = ({ match }) => {
   const pageData = useMemo(() => {
     return movimentBalance === 'entry-balance'
       ? {
-          title: 'Entrada',
-          color: '#F7931B',
+          title: 'Entradas',
+          color: '#4E41F0',
           data: gains,
         }
       : {
-          title: 'Saída',
+          title: 'Saídas',
           color: '#d62c2c',
           data: expenses,
         };
@@ -62,8 +62,8 @@ const List: React.FC<IListProps> = ({ match }) => {
     const { data } = pageData;
     const filteredDate = data.filter((value) => {
       const date = new Date(value.date);
-      const month = String(date.getMonth() + 1);
-      const year = String(date.getFullYear());
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
       return (
         month === monthSelected &&
         year === yearSelected &&
@@ -126,17 +126,35 @@ const List: React.FC<IListProps> = ({ match }) => {
     }
   };
 
+  const handleMonthSelected = (month: string) => {
+    try {
+      const monthSelected = Number(month);
+      setMonthSelected(monthSelected);
+    } catch (error) {
+      throw new Error(' Invalid formated. Acceptable only 0 - 12 ');
+    }
+  };
+
+  const handleYearSelected = (year: string) => {
+    try {
+      const yearSelected = Number(year);
+      setYearSelected(yearSelected);
+    } catch {
+      throw new Error('Invalid formate. Acceptable only integer');
+    }
+  };
+
   return (
     <Container>
       <ContentHeader title={pageData.title} lineColor={pageData.color}>
         <Select
           options={months}
-          onChange={(e) => setMonthSelected(e.target.value)}
+          onChange={(e) => handleMonthSelected(e.target.value)}
           defaultValue={monthSelected}
         />
         <Select
           options={years}
-          onChange={(e) => setYearSelected(e.target.value)}
+          onChange={(e) => handleYearSelected(e.target.value)}
           defaultValue={yearSelected}
         />
       </ContentHeader>
