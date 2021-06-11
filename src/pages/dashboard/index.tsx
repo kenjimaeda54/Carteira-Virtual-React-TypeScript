@@ -1,10 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Container } from './style';
+import { Container, Content } from './style';
 import ContentHeader from '../../components/content-header';
 import Select from '../../components/select';
 import gains from '../../data/gains';
 import expenses from '../../data/expenses';
 import OptionsMonth from '../../util/options-date';
+import WallteBalance from '../../components/wallte-balance';
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(
@@ -72,6 +73,29 @@ const Dashboard: React.FC = () => {
           defaultValue={yearSelected}
         />
       </ContentHeader>
+      <Content>
+        <WallteBalance
+          title="Saldo"
+          amount={150.0}
+          color="#4E41F0"
+          footerLabel="atualizado de acordo com as entradas e saídas"
+          icon="dollar"
+        />
+        <WallteBalance
+          title="Entradas"
+          amount={5000.0}
+          color="#F7931B"
+          footerLabel="atualizado de acordo com as entradas e saídas"
+          icon="arrowUp"
+        />
+        <WallteBalance
+          title="Saídas"
+          amount={4850.0}
+          color="#E44C4E"
+          footerLabel="atualizado de acordo com as entradas e saídas"
+          icon="arrowDown"
+        />
+      </Content>
     </Container>
   );
 };
