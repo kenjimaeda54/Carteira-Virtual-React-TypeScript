@@ -6,6 +6,8 @@ import gains from '../../data/gains';
 import expenses from '../../data/expenses';
 import OptionsMonth from '../../util/options-date';
 import WallteBalance from '../../components/wallte-balance';
+import happyIcon from '../../assets/happy.svg';
+import MessageBox from '../../components/message-box';
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(
@@ -94,6 +96,12 @@ const Dashboard: React.FC = () => {
           color="#E44C4E"
           footerLabel="atualizado de acordo com as entradas e saídas"
           icon="arrowDown"
+        />
+        <MessageBox
+          title="Muito bem"
+          icon={happyIcon}
+          description="Sua carteira esta positiva"
+          footerText="Você deveria investir seu saldo"
         />
       </Content>
     </Container>
