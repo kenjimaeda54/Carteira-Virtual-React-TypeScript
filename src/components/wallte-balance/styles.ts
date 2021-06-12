@@ -31,4 +31,8 @@ export const Container = styled.div<IContainerProps>`
     position: absolute;
     bottom: 10px;
   }
+  h1,
+  span {
+    font-size: 20px;
+  }
 `;
