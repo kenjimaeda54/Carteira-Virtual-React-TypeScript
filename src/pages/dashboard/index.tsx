@@ -10,6 +10,7 @@ import happyIcon from '../../assets/happy.svg';
 import sad from '../../assets/sad.svg';
 import grinning from '../../assets/grinning.svg';
 import MessageBox from '../../components/message-box';
+import PieCharBox from '../../components/pie-char-box/index';
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(
@@ -86,8 +87,6 @@ const Dashboard: React.FC = () => {
     //de não atualizar
   }, [expenses, monthSelected, yearSelected]);
 
-  console.log(totalExpenses);
-
   const totalGains = useMemo(() => {
     let total = 0;
 
@@ -142,6 +141,28 @@ const Dashboard: React.FC = () => {
   }, [balance]);
   const { title, description, footerText, icon } = messageUser;
 
+  const relationExpensesGains = useMemo(() => {
+    const total = totalGains + totalExpenses;
+    const percentTotalGains = (totalGains / total) * 100;
+    const percentTotalExpenses = (totalExpenses / total) * 100;
+
+    const data = [
+      {
+        name: 'Entradas',
+        value: totalGains,
+        percent: Number(percentTotalGains.toFixed(1)),
+        color: '#E44C4E',
+      },
+      {
+        name: 'Saídas',
+        value: totalExpenses,
+        percent: Number(percentTotalExpenses.toFixed(1)),
+        color: '#F7931B',
+      },
+    ];
+    return data;
+  }, [totalGains, totalExpenses]);
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#F7931B">
@@ -184,6 +205,7 @@ const Dashboard: React.FC = () => {
           description={description}
           footerText={footerText}
         />
+        <PieCharBox data={relationExpensesGains} />
       </Content>
     </Container>
   );
