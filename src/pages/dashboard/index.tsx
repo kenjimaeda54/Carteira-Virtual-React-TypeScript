@@ -11,6 +11,7 @@ import sad from '../../assets/sad.svg';
 import grinning from '../../assets/grinning.svg';
 import MessageBox from '../../components/message-box';
 import PieCharBox from '../../components/pie-char-box/index';
+import HistoryBox from '../../components/history-box';
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(
@@ -163,6 +164,57 @@ const Dashboard: React.FC = () => {
     return data;
   }, [totalGains, totalExpenses]);
 
+  const historyBoxBalance = useMemo(() => {
+    return OptionsMonth.map((_, month) => {
+      let amountEntry = 0;
+      gains.forEach((gains) => {
+        const date = new Date(gains.date);
+        const gainYear = date.getFullYear();
+        const gainMonth = date.getMonth();
+
+        if (gainMonth === month && gainYear === yearSelected) {
+          try {
+            amountEntry += Number(gains.amount);
+          } catch {
+            throw new Error('AmountEntry invalid.This should be number ');
+          }
+        }
+      });
+
+      let amountOutput = 0;
+
+      expenses.forEach((gains) => {
+        const date = new Date(gains.date);
+        const expensesYear = date.getFullYear();
+        const expensesMonth = date.getMonth();
+
+        if (expensesMonth === month && expensesYear === yearSelected) {
+          try {
+            amountOutput += Number(gains.amount);
+          } catch {
+            throw new Error('AmountEntry invalid.This should be number ');
+          }
+        }
+      });
+
+      return {
+        month: OptionsMonth[month].substr(0, 3), //retorna fev,jan
+        amountOutput,
+        amountEntry,
+        monthNumber: month,
+      };
+    }).filter((date) => {
+      const monthCurrent = new Date().getMonth();
+      const yearCurrent = new Date().getFullYear();
+
+      return (
+        (yearSelected === yearCurrent && date.monthNumber <= monthCurrent) ||
+        yearSelected < yearCurrent
+      );
+    });
+  }, [yearSelected]);
+  console.log(historyBoxBalance);
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#F7931B">
@@ -206,6 +258,11 @@ const Dashboard: React.FC = () => {
           footerText={footerText}
         />
         <PieCharBox data={relationExpensesGains} />
+        <HistoryBox
+          data={historyBoxBalance}
+          lineColorAmountOutput="#F7931B"
+          lineColorAmountEntry="#E44C4E"
+        />
       </Content>
     </Container>
   );

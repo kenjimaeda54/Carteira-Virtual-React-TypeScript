@@ -24,7 +24,7 @@ export const SideLeft = styled.aside`
 export const LegendContainer = styled.ul`
   list-style: none;
   height: 150px;
-  overflow-y: scroll;
+  overflow-y: hidden;
   ::-webkit-scrollbar {
     width: 2px;
   }
@@ -44,10 +44,10 @@ export const Legend = styled.li<ILegendProps>`
 
   > div {
     background-color: ${(props) => props.color};
-    width: 40%;
     height: 40%;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 15px;
+    padding: 5px;
     line-height: 40px;
     text-align: center;
   }
@@ -60,5 +60,5 @@ export const SideRight = styled.main`
   flex: 1; //vai ocupar todo campo disponível;
   justify-content: center;
   align-items: center;
-  margin-left: -7px;
+  margin-left: -50px;
 `;

@@ -26,7 +26,7 @@ const PieCharBox: React.FC<IPieCharBoxProps> = ({ data }) => (
         {data.map((item, index) => {
           return (
             <Legend key={index} color={item.color}>
-              <div>{item.percent ? item.percent : 0}</div>
+              <div>{item.percent ? `${item.percent}%` : 0}</div>
               <span>{item.name}</span>
             </Legend>
           );
