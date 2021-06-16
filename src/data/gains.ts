@@ -12,7 +12,7 @@ export default [
     amount: '150.13',
     type: 'entrada',
     frequency: 'eventual',
-    date: '2020-01-17',
+    date: '2020-02-17',
   },
   {
     description: 'Salário',

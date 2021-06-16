@@ -8,10 +8,12 @@ import OptionsMonth from '../../util/options-date';
 import WallteBalance from '../../components/wallte-balance';
 import happyIcon from '../../assets/happy.svg';
 import sad from '../../assets/sad.svg';
+import oops from '../../assets/oops-img.svg';
 import grinning from '../../assets/grinning.svg';
 import MessageBox from '../../components/message-box';
 import PieCharBox from '../../components/pie-char-box/index';
 import HistoryBox from '../../components/history-box';
+import BarChartBox from '../../components/bar-char-box';
 
 const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(
@@ -71,7 +73,7 @@ const Dashboard: React.FC = () => {
     expenses.forEach((item) => {
       const date = new Date(item.date);
       const year = date.getFullYear();
-      const month = date.getMonth() + 1;
+      const month = date.getMonth();
 
       if (monthSelected === month && yearSelected === year) {
         try {
@@ -94,8 +96,7 @@ const Dashboard: React.FC = () => {
     gains.forEach((item) => {
       const date = new Date(item.date);
       const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-
+      const month = date.getMonth();
       if (monthSelected === month && yearSelected === year) {
         try {
           //nos estamos trabalhando com forEach,try vai deixar
@@ -116,7 +117,15 @@ const Dashboard: React.FC = () => {
   }, [totalGains, totalExpenses]);
 
   const messageUser = useMemo(() => {
-    if (balance < 0) {
+    if (totalGains === 0 && totalExpenses === 0) {
+      return {
+        title: 'Ops',
+        description: 'Neste mês,não ha registros de entradas e saídas',
+        footerText:
+          'Parece que você não fez nenhuma entrada de registro e saídas neste mes',
+        icon: oops,
+      };
+    } else if (balance < 0) {
       return {
         title: 'Que triste',
         description: 'Neste mes você gastou mais que deveria',
@@ -139,25 +148,27 @@ const Dashboard: React.FC = () => {
         icon: grinning,
       };
     }
-  }, [balance]);
+  }, [balance, totalGains, totalExpenses]);
   const { title, description, footerText, icon } = messageUser;
 
   const relationExpensesGains = useMemo(() => {
     const total = totalGains + totalExpenses;
-    const percentTotalGains = (totalGains / total) * 100;
-    const percentTotalExpenses = (totalExpenses / total) * 100;
+    const percentTotalGains = Number(((totalGains / total) * 100).toFixed(1));
+    const percentTotalExpenses = Number(
+      ((totalExpenses / total) * 100).toFixed(1),
+    );
 
     const data = [
       {
         name: 'Entradas',
         value: totalGains,
-        percent: Number(percentTotalGains.toFixed(1)),
+        percent: percentTotalGains ? percentTotalGains : 0,
         color: '#E44C4E',
       },
       {
         name: 'Saídas',
         value: totalExpenses,
-        percent: Number(percentTotalExpenses.toFixed(1)),
+        percent: percentTotalExpenses ? percentTotalExpenses : 0,
         color: '#F7931B',
       },
     ];
@@ -213,7 +224,98 @@ const Dashboard: React.FC = () => {
       );
     });
   }, [yearSelected]);
-  console.log(historyBoxBalance);
+
+  const relationshipIntervalExpenseCurrentEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    expenses
+      .filter((expense) => {
+        const date = new Date(expense.date);
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        return yearSelected === year && month === monthSelected;
+      })
+      .forEach((value) => {
+        if (value.frequency === 'eventual') {
+          return (amountEventual += Number(value.amount));
+        }
+        if (value.frequency === 'recorrente') {
+          return (amountRecurrent += Number(value.amount));
+        }
+      });
+
+    const total = amountRecurrent + amountEventual;
+    const relationshipExpenseRecurrent = Number(
+      ((amountRecurrent / total) * 100).toFixed(1),
+    );
+    const relationshipExpensesEventual = Number(
+      ((amountEventual / total) * 100).toFixed(1),
+    );
+
+    return [
+      {
+        name: 'Eventual',
+        amount: amountEventual,
+        percent: relationshipExpensesEventual
+          ? relationshipExpensesEventual
+          : 0,
+        color: '#E44C4E',
+      },
+      {
+        name: 'Recorrente',
+        amount: amountRecurrent,
+        percent: relationshipExpenseRecurrent
+          ? relationshipExpenseRecurrent
+          : 0,
+        color: '#F7931B',
+      },
+    ];
+  }, [yearSelected, monthSelected]);
+
+  const relationshipIntervalGainsCurrentEventual = useMemo(() => {
+    let amountRecurrent = 0;
+    let amountEventual = 0;
+
+    gains
+      .filter((gains) => {
+        const date = new Date(gains.date);
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        return yearSelected === year && month === monthSelected;
+      })
+      .forEach((value) => {
+        if (value.frequency === 'eventual') {
+          return (amountEventual += Number(value.amount));
+        }
+        if (value.frequency === 'recorrente') {
+          return (amountRecurrent += Number(value.amount));
+        }
+      });
+
+    const total = amountRecurrent + amountEventual;
+    const relationshipGainsRecurrent = Number(
+      ((amountRecurrent / total) * 100).toFixed(1),
+    );
+    const relationshipGainsEventual = Number(
+      ((amountEventual / total) * 100).toFixed(1),
+    );
+
+    return [
+      {
+        name: 'Eventual',
+        amount: amountEventual,
+        percent: relationshipGainsEventual ? relationshipGainsEventual : 0,
+        color: '#E44C4E',
+      },
+      {
+        name: 'Recorrente',
+        amount: amountRecurrent,
+        percent: relationshipGainsRecurrent ? relationshipGainsRecurrent : 0,
+        color: '#F7931B',
+      },
+    ];
+  }, [yearSelected, monthSelected]);
 
   return (
     <Container>
@@ -262,6 +364,14 @@ const Dashboard: React.FC = () => {
           data={historyBoxBalance}
           lineColorAmountOutput="#F7931B"
           lineColorAmountEntry="#E44C4E"
+        />
+        <BarChartBox
+          title="Saídas"
+          data={relationshipIntervalExpenseCurrentEventual}
+        />
+        <BarChartBox
+          title="Entradas"
+          data={relationshipIntervalGainsCurrentEventual}
         />
       </Content>
     </Container>

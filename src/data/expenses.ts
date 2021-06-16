@@ -2,7 +2,7 @@
 export default [
   {
     description: 'Energia elétrica',
-    amount: '150.55',
+    amount: '1300.52',
     type: 'saída',
     frequency: 'recorrente',
     date: '2021-01-10',
@@ -12,7 +12,7 @@ export default [
     amount: '75.55',
     type: 'saída',
     frequency: 'recorrente',
-    date: '2021-01-15',
+    date: '2021-02-15',
   },
   {
     description: 'Telefone',
@@ -26,28 +26,28 @@ export default [
     amount: '300.00',
     type: 'saída',
     frequency: 'recorrente',
-    date: '2021-01-23',
+    date: '2021-02-23',
   },
   {
     description: 'Compras do mês',
     amount: '625.78',
     type: 'saída',
     frequency: 'recorrente',
-    date: '2021-01-23',
+    date: '2020-01-23',
   },
   {
     description: 'Lanche',
     amount: '45.70',
     type: 'saída',
     frequency: 'eventual',
-    date: '2021-01-23',
+    date: '2021-05-23',
   },
   {
     description: 'Blusa',
     amount: '95.70',
     type: 'saída',
     frequency: 'eventual',
-    date: '2021-01-23',
+    date: '2020-01-23',
   },
   {
     description: 'Energia elétrica',
@@ -243,7 +243,7 @@ export default [
     amount: '150.00',
     type: 'saída',
     frequency: 'eventual',
-    date: '2021-01-23',
+    date: '2021-04-23',
   },
   {
     description: 'Energia elétrica',

@@ -4,6 +4,7 @@ const DateFormated = (date: string): string => {
     dateFormated.getDate() + 1 > 9
       ? dateFormated.getDate() + 1
       : `0${dateFormated.getDate() + 1}`;
+
   const month =
     dateFormated.getMonth() + 1 > 9 //aqui também precisa do mais 1
       ? dateFormated.getMonth() + 1 //+1 é porque mes começa contar no zero

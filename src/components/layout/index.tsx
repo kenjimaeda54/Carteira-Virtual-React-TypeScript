@@ -4,17 +4,14 @@ import Content from '../content';
 import MainHeader from '../main-header';
 import { Layout } from './style';
 
-const GridLayout: React.FC = ({ children }) => {
-  return (
-    <div>
-      <Layout>
-        <MainHeader />
-        <GridAside />
-        <Content>{children}</Content>
-        {/* para realizar o deep ou seja passar varias props preciso estar com
+const GridLayout: React.FC = ({ children }) => (
+  <Layout>
+    <MainHeader />
+    <GridAside />
+    <Content>{children}</Content>
+    {/* para realizar o deep ou seja passar varias props preciso estar com
         componente aberto */}
-      </Layout>
-    </div>
-  );
-};
+  </Layout>
+);
+
 export default GridLayout;
