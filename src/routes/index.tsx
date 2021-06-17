@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import App from './app.routes';
+import AthRoutes from './ath.routes';
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
-      <App />
+      <AthRoutes />
     </BrowserRouter>
   );
 };

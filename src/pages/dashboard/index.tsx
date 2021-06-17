@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Container, Content } from './style';
 import ContentHeader from '../../components/content-header';
 import Select from '../../components/select';
@@ -23,23 +23,23 @@ const Dashboard: React.FC = () => {
     new Date().getFullYear(),
   );
 
-  const handleMonthSelected = (month: string) => {
+  const handleMonthSelected = useCallback((month: string) => {
     try {
       const monthSelected = Number(month);
       setMonthSelected(monthSelected);
     } catch (error) {
       throw new Error(' Invalid formated. Acceptable only 0 - 12 ');
     }
-  };
+  }, []);
 
-  const handleYearSelected = (year: string) => {
+  const handleYearSelected = useCallback((year: string) => {
     try {
       const yearSelected = Number(year);
       setYearSelected(yearSelected);
     } catch {
       throw new Error('Invalid formate. Acceptable only integer');
     }
-  };
+  }, []);
 
   const years = useMemo(() => {
     const yearUniq: number[] = [];
@@ -58,6 +58,7 @@ const Dashboard: React.FC = () => {
       };
     });
   }, []);
+
   const months = useMemo(() => {
     return OptionsMonth.map((item, index) => {
       return {

@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from 'react';
+import React, { useState, useContext, createContext, useCallback } from 'react';
 import dark from '../styles/themes/dark';
 import light from '../styles/themes/light';
 
@@ -28,23 +28,35 @@ interface ITheme {
 const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 const ThemeProviderContext: React.FC = ({ children }) => {
-  const [theme, setTheme] = useState<ITheme>(dark);
-
-  const toggleTheme = () => {
-    if (theme.title === 'dark') {
-      setTheme(light);
+  const [theme, setTheme] = useState<ITheme>(() => {
+    const themeSavedLocal = localStorage.getItem('@my-theme-application');
+    if (themeSavedLocal) {
+      return JSON.parse(themeSavedLocal);
     } else {
-      setTheme(dark);
+      return dark;
     }
-  };
+  });
+
+  const toggleTheme = useCallback(() => {
+    if (theme.title === 'dark') {
+      console.log(theme.title);
+      setTheme(light);
+      localStorage.setItem('@my-theme-application', JSON.stringify(light));
+    } else {
+      console.log(theme.title);
+      setTheme(dark);
+      localStorage.setItem('@my-theme-application', JSON.stringify(dark));
+    }
+  }, [theme]);
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ toggleTheme, theme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
-function useTheme(): IThemeContext {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function useTheme() {
   const context = useContext(ThemeContext);
   return context;
 }
