@@ -1,12 +1,18 @@
 import React from 'react';
-import { ThemeProviderContext } from './hooks/index';
+import { ThemeProviderContext } from './hooks/theme';
+import { AthContext } from './hooks/auth';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+//para sua aplicação enxergar os context precisa na raiz
+//chamar o context,com AhtContext estou disponibilizando todo
+//context o ao projeto
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProviderContext>
-      <App />
+      <AthContext>
+        <App />
+      </AthContext>
     </ThemeProviderContext>
   </React.StrictMode>,
   document.getElementById('root'),

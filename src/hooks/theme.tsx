@@ -39,15 +39,14 @@ const ThemeProviderContext: React.FC = ({ children }) => {
 
   const toggleTheme = useCallback(() => {
     if (theme.title === 'dark') {
-      console.log(theme.title);
       setTheme(light);
       localStorage.setItem('@my-theme-application', JSON.stringify(light));
     } else {
-      console.log(theme.title);
       setTheme(dark);
       localStorage.setItem('@my-theme-application', JSON.stringify(dark));
     }
   }, [theme]);
+
   return (
     <ThemeContext.Provider value={{ toggleTheme, theme }}>
       {children}

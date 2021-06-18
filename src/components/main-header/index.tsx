@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { MenHeader, Profile, Welcome, UserName } from './header';
-import { useTheme } from '../../hooks/index';
+import { MenHeader, Profile, Welcome, UserName } from './style';
+import { useTheme } from '../../hooks/theme';
 import emojis from '../../util/emojis'; //por ser export default consigo pegar a pasta
 import Toggle from '../togle';
 

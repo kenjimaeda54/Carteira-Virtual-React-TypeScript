@@ -1,7 +1,7 @@
 import React from 'react';
 import GlobalStyles from './GlobalStyles';
 import { ThemeProvider } from 'styled-components';
-import { useTheme } from './hooks/index';
+import { useTheme } from './hooks/theme';
 import Routes from './routes';
 
 function App(): JSX.Element {

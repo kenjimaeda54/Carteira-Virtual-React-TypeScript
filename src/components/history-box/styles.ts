@@ -29,6 +29,15 @@ export const Header = styled.div`
     margin-bottom: 20px;
     padding-left: 20px;
   }
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    font-size: 12px;
+
+    > h2 {
+      margin-left: -18px;
+      width: 100%;
+    }
+  }
 `;
 
 export const LegendContainer = styled.ul`
@@ -54,5 +63,17 @@ export const Legend = styled.li<ILegendProps>`
   }
   > span {
     margin-left: 5px;
+  }
+
+  @media (max-width: 1280px) {
+    > div {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  @media (max-width: 770px) {
+    > div {
+      font-size: 11px;
+    }
   }
 `;

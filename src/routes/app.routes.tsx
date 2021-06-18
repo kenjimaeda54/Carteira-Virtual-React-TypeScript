@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <GridLayout>
       <Switch>
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/" component={Dashboard} />
         /* esse /:type vou receber como props de navegação */
         <Route exact path="/list/:type" component={List} />
       </Switch>

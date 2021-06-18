@@ -13,6 +13,12 @@ export const Container = styled.div`
   background-color: ${(props) => props.theme.colors.tertiary};
   color: ${(props) => props.theme.colors.white};
   border-radius: 7px;
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
 `;
 
 export const SideLeft = styled.aside`
@@ -41,6 +47,11 @@ export const LegendContainer = styled.ul`
   ::-webkit-scrollbar-track {
     background-color: ${(props) => props.theme.colors.tertiary};
   }
+
+  @media (max-width: 1000px) {
+    display: flex;
+    height: auto;
+  }
 `;
 export const Legend = styled.li<ILegendProps>`
   display: flex;
@@ -60,6 +71,18 @@ export const Legend = styled.li<ILegendProps>`
   }
   span {
     margin-left: 5px;
+  }
+  @media (max-width: 450px) {
+    > div {
+      height: 30px;
+      font-size: 12px;
+      text-align: center;
+      line-height: 30px;
+      margin: 0 4px;
+    }
+    span {
+      font-size: 12px;
+    }
   }
 `;
 

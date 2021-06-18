@@ -22,6 +22,12 @@ export const TitleContent = styled.div<ITitleColor>`
       border-bottom: 10px solid ${(props) => props.lineColor};
     }
   }
+  @media (max-width: 500px) {
+    > h1 {
+      margin-left: -50px;
+      font-size: 28px;
+    }
+  }
 `;
 
 export const Controllers = styled.div`
