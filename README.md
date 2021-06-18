@@ -12,7 +12,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   * <a href='#Construção' >  Construção </a>   
   * <a href='#o-que-eu-aprendi' >  Aprendizado </a>
   * <a href='#Feature' >  Feature </a>
-* <a href='#Autor' >  Autor </a> 
 
 ## Visão Geral
 ## Desafio
@@ -123,7 +122,7 @@ export default List;
 
  ```
  
- Usuamos contextApi  para criar logica para compartilhar os temas e criar logica para as rotas autenticadas é as não atennticadas.
+ Usuamos contextApi  para criar logica para compartilhar os temas e  logica para as rotas autenticadas é as não atennticadas.
  Ela e uma dependencia que vem junto com create react app então não precisa ser instalada independente
  
   ```javascript
@@ -194,9 +193,11 @@ export { useContextAth, AthContext };
         />
     
   ```
-  Abaixo segue um recurso avançado do styled component facilita nas estilizações 
+  Abaixo segue um recurso avançado do styled component facilita nas estilizações de renderização condicional.
  
  ```javascript
+ import styled, { css } from 'styled-components';
+ 
  
  interface IContainerProps {
   openModal: boolean;
@@ -213,41 +214,141 @@ export { useContextAth, AthContext };
  
  languages: list.filter(value=>{if(value.languages.includes(paramsJob)) return value}),
 `; 
- 
- ```
- 
- Outro recurso basico gostaria de compartilhar aqui é background img no styled component</br>
- Ele utiliza mesma maneira que react faz para gerar imagem em src. Preciso importar uma variavel com caminho da imagem.
- 
- 
- ```javascript
- import  projectFilter from "../assets/img/projectFilter.jpg";
- 
- 
- export const Container = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   background-image: url(${projectFilter}); 
-   >div{
-       margin-top: 150px;
-   }
 
+```
+Outro recurso do styled componet e animaçõoes.
+
+
+```javascript
+
+import styled, { keyframes } from 'styled-components';
+
+const animate = keyframes`
+   0%{
+      transform: translateX(-100px);
+      opacity:0;
+
+   }
+   50%{
+     opacity: .3;
+
+   }
+   100%{
+     transform: translateX(0px);
+     opacity: 1;
+   }
+`;
+
+
+export const Container = styled.div`
+  width: 100%;
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  background-color: ${(props) => props.theme.colors.tertiary};
+  margin: 10px 0;
+  padding: 30px 20px;
+  border-radius: 7px;
+  animation: ${animate} 0.3s;
 `;
  
+ ```
+Foi utilizado o [recharts](https://recharts.org/en-US/) para os graficos.
+ 
+ ```javascript
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+ 
+ 
+ const PieCharBox: React.FC<IPieCharBoxProps> = ({ data }) => (
+ <SideRight>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie data={data} dataKey="percent">
+            {/*renderizar componente em map,não esquece e entre (<Cell />)  */}
+            {data.map((item, index) => (
+              <Cell key={index} fill={item.color} />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </SideRight>
+ }
  
  ```
+ Outra tenica bacana e o modal,ele e aberto apos clicado em um icone,esta  icoe esta apenas disponivel para mobile,por isso o media.</br>
+ Overflow-y facilita sumir  o conteudo que sobra no menu de navegação quanndo e fechado,outra alternnativa e no caso seria mais verboso</br>
+ E colocar uma renderização condicional em cada item de navegação.</br>
+ Maneira que foi construido com overflo-y:hiden e simples e funcional
+ 
+```javascript
+import styled, { css } from 'styled-components';
+
+ interface IContainerProps {
+  openModal: boolean;
+}
+
+  export const Container = styled.div<IContainerProps>`
+  grid-area: AS;
+  background-color: ${(props) => props.theme.colors.secondary};
+  padding-left: 2vw;
+  position: relative;
+
+  @media (max-width: 750px) {
+    padding-left: 7px;
+    width: 170px;
+    position: fixed;
+    z-index: 2;
+    height: ${(props) => (props.openModal ? '100vh' : '70px')};
+    overflow-y: hidden;
+    ${(props) =>
+      !props.openModal &&
+      css`
+        border: none;
+        border-bottom: ${(props) => props.theme.colors.gray};
+      `};
+  }
  
  
+ ```
+ Por fim aprendi a tipar componentes nativos do html</br>
+ Com {...rest} toda propriedade dos componentes estão disponiveis</br>
+ Observa a maniera de t ipagem do button para Input tem algumas diferenças.
+ 
+ ```javascript
+ import { ButtonHTMLAttributes } from 'react';
+import { Container } from './style';
+
+type IButton = ButtonHTMLAttributes<HTMLButtonElement>;
+
+const Button: React.FC<IButton> = ({ children, ...rest }) => (
+  <Container {...rest}>{children}</Container>
+);
+
+export default Button;
+ 
+ import { InputHTMLAttributes } from 'react';
+import { Container } from './style';
+
+
+type IInput = InputHTMLAttributes<HTMLInputElement>;
+
+
+const Input: React.FC<IInput> = ({ ...rest }) => <Container {...rest} />;
+export default Input;
+
+ 
+ 
+ 
+ ```
  
  # Feature
   - Hooks
   - styled component
-  - Solid
+  - Atomics
   - Media Screen
+  - Tipagem
 
-## Autor
- - Frontend Mentor - [@kenjimaeda54](https://www.frontendmentor.io/profile/kenjimaeda54)
+
 
 
 
