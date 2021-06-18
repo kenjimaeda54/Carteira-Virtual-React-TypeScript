@@ -31,8 +31,8 @@ Tambem algumas tenicas avançadas em CSS</br>
 </br>
 
 Toda aplicação segue principios do [desing Atomics](https://atomicdesign.bradfrost.com/chapter-2/) </br>
-principio e utilizar a quimica para criação de nossa aplicação
-No codigo abaixo esta um exemplo, nosso layout seria Interfaces de acordo com  Desing Atomics</br>
+principio e utilizar a quimica para criação de nossa aplicação.
+No codigo abaixo esta um exemplo, nosso layout seria Interfaces de acordo com  Desing Atomics.</br>
 No content ficara todas as moleculas(conjunto de atomos),assim seguindo a regra de atomic
 
 ~~~javascript 
@@ -75,8 +75,8 @@ const App: React.FC = () => {
 export default App
  ~~~
 
-No list/:type é uma ténica que garente em apenas um arquvio possuir duas telas,uma sera renderizada de acordo com type recebido</br>
-é a outra de acordo com outro tipo de type recebbido</br>
+No list/:type é uma ténica que garente em apenas um arquvio possuir duas telas,uma sera renderizada de acordo com type recebido,</br>
+é a outra de acordo com outro tipo recebido</br>
 Type na nossa aplicação tem dois parametros /entry-balance ou exit-balannce, ambos chegam pelo match.params.type que e enviado pelas rotas</br>
  
  ```javascript
@@ -122,7 +122,7 @@ export default List;
 
  ```
  
- Usuamos contextApi  para criar logica para compartilhar os temas e  logica para as rotas autenticadas é as não atennticadas.
+ Usuamos contextApi para criar logica para compartilhar os temas e  logica para as rotas autenticadas é as não atennticadas.</br>
  Ela e uma dependencia que vem junto com create react app então não precisa ser instalada independente
  
   ```javascript
@@ -276,7 +276,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
  
  ```
  Outra tenica bacana e o modal,ele e aberto apos clicado em um icone,esta  icoe esta apenas disponivel para mobile,por isso o media.</br>
- Overflow-y facilita sumir  o conteudo que sobra no menu de navegação quanndo e fechado,outra alternnativa e no caso seria mais verboso</br>
+ Overflow-y facilita sumir  o conteudo que sobra no menu de navegação quanndo e fechado,outra alternnativa e no caso seria mais verboso</br></br>
  E colocar uma renderização condicional em cada item de navegação.</br>
  Maneira que foi construido com overflo-y:hiden e simples e funcional
  
