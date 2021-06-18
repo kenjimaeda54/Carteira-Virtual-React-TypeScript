@@ -335,11 +335,9 @@ type IInput = InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<IInput> = ({ ...rest }) => <Container {...rest} />;
 export default Input;
-
- 
- 
  
  ```
+ Docs [react icons](https://github.com/react-icons/react-icons  )
  
  # Feature
   - Hooks
