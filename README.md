@@ -12,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   * <a href='#Construção' >  Construção </a>   
   * <a href='#o-que-eu-aprendi' >  Aprendizado </a>
   * <a href='#Feature' >  Feature </a>
-  * * <a href='#Dependencias' >  Dependencias </a>
+  * <a href='#Dependencias'> Dependencias </a>
 
 ## Visão Geral
 ## Desafio
