@@ -12,6 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   * <a href='#Construção' >  Construção </a>   
   * <a href='#o-que-eu-aprendi' >  Aprendizado </a>
   * <a href='#Feature' >  Feature </a>
+  * * <a href='#Dependencias' >  Dependencias </a>
 
 ## Visão Geral
 ## Desafio
@@ -346,7 +347,11 @@ export default Input;
   - Media Screen
   - Tipagem
 
-
+## Dependencias
+[React Count Up ](https://www.npmjs.com/package/react-countup)
+[React Icons](https://github.com/react-icons/react-icons)
+[React Charts](https://recharts.org/en-US/)
+[Styled Component](https://styled-components.com) 
 
 
 
