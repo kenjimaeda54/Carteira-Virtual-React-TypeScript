@@ -348,10 +348,10 @@ export default Input;
   - Tipagem
 
 ## Dependencias
-[React Count Up ](https://www.npmjs.com/package/react-countup)
-[React Icons](https://github.com/react-icons/react-icons)
-[React Charts](https://recharts.org/en-US/)
-[Styled Component](https://styled-components.com) 
+- [React Count Up ](https://www.npmjs.com/package/react-countup)
+- [React Icons](https://github.com/react-icons/react-icons)
+- [React Charts](https://recharts.org/en-US/)
+- [Styled Component](https://styled-components.com) 
 
 
 
