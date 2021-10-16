@@ -76,7 +76,7 @@ const App: React.FC = () => {
 export default App
  ~~~
 
-No list/:type é uma ténica que garente em apenas um arquvio possuir duas telas,uma sera renderizada de acordo com type recebido,</br>
+No list/:type é uma ténica que garente em apenas dois arquivos possuir duas telas,na mesma rota,uma sera renderizada de acordo com type recebido,</br>
 é a outra de acordo com outro tipo recebido</br>
 Type na nossa aplicação tem dois parametros /entry-balance ou exit-balannce, ambos chegam pelo match.params.type que e enviado pelas rotas</br>
  
